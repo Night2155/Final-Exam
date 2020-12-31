@@ -5,8 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="520" Width="1012">
     <Grid>
-        
+        <Label x:Name="label" Content="學生" HorizontalAlignment="Left" Margin="21,24,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <ComboBox x:Name="CBStudent" HorizontalAlignment="Left" Margin="76,24,0,0" VerticalAlignment="Top" Width="456" Height="35"/>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="344" Margin="34,80,0,0" VerticalAlignment="Top" Width="427">
+            <TabItem Header="以教師分類課程">
+            </TabItem>
+            <TabItem Header="所有課程列表">
+            </TabItem>
+        </TabControl>
+        <Button x:Name="Push" HorizontalAlignment="Left" Margin="490,112,0,0" VerticalAlignment="Top" Width="58" Height="58" BorderThickness="0" Background="{x:Null}">
+            <Image Source="icons8-forward-button-64.png" Width="50"></Image>
+        </Button>
+        <Button x:Name="Back" HorizontalAlignment="Left" Margin="490,202,0,0" VerticalAlignment="Top" Width="58" Height="58" BorderThickness="0" Background="{x:Null}">
+            <Image Source="icons8-go-back-64.png" Width="50"></Image>
+        </Button>
+        <Button x:Name="SaveFile" HorizontalAlignment="Left" Margin="490,338,0,0" VerticalAlignment="Top" Width="60" Height="48" BorderThickness="0" Background="{x:Null}">
+            <Image Source="icons8-save-64.png"></Image>
+        </Button>
+        <ListView x:Name="listView" HorizontalAlignment="Left" Height="344" Margin="572,80,0,0" VerticalAlignment="Top" Width="407">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
