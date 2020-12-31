@@ -12,17 +12,35 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using CsvHelper;
+using System.Globalization;
+using System.Collections.ObjectModel;
 
 namespace WpfApp2
-{
-    /// <summary>
-    /// MainWindow.xaml 的互動邏輯
-    /// </summary>
+{ 
     public partial class MainWindow : Window
     {
+        List<Student> studentlist = new List<Student>();
+        ObservableCollection<string> studentNames = new ObservableCollection<string>();
         public MainWindow()
         {
             InitializeComponent();
+            using (var reader = new StreamReader("D:\\2B.csv",Encoding.Default))
+            using (var csv = new CsvReader(reader, CultureInfo.CurrentCulture))
+            {
+                var records = csv.GetRecords<Student>();
+                foreach(var studentfile in records)
+                {
+                    studentlist.Add(studentfile);
+                    studentNames.Add(studentfile.ID+studentfile.Name);
+                    
+                }
+            }
+            CBStudent.ItemsSource = studentNames;
+            studentNames.Clear();
         }
+
+
     }
 }
