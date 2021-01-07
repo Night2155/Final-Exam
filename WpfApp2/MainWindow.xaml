@@ -5,26 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="520" Width="1012">
+        Title="MainWindow" Height="520" Width="1367.2">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="293*"/>
+            <ColumnDefinition Width="210*"/>
+        </Grid.ColumnDefinitions>
         <Label x:Name="label" Content="學生" HorizontalAlignment="Left" Margin="21,24,0,0" VerticalAlignment="Top" FontSize="20"/>
         <ComboBox x:Name="CBStudent" HorizontalAlignment="Left" Margin="76,24,0,0" VerticalAlignment="Top" Width="456" Height="35"/>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="344" Margin="34,80,0,0" VerticalAlignment="Top" Width="427">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="344" Margin="34,80,0,0" VerticalAlignment="Top" Width="575">
             <TabItem Header="以教師分類課程">
+                <TreeView x:Name="Teacher">
+                    
+                </TreeView>
             </TabItem>
             <TabItem Header="所有課程列表">
+                <ListView x:Name="AllClassList" Margin="0,1,-0.4,-1.2">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="教師名稱" DisplayMemberBinding="{Binding TeacherName}" Width="60"/>
+                            <GridViewColumn Header="課程名稱" DisplayMemberBinding="{Binding CourseName}" Width="160"/>
+                            <GridViewColumn Header="學分" DisplayMemberBinding="{Binding Point}" Width="30"/>
+                            <GridViewColumn Header="必、選修" DisplayMemberBinding="{Binding Type}" Width="70"/>
+                            <GridViewColumn Header="開課班級" DisplayMemberBinding="{Binding OpeningClass}" Width="120"/>
+                            <GridViewColumn Header="上課日期" DisplayMemberBinding="{Binding ClassTime}" Width="80"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </TabItem>
         </TabControl>
-        <Button x:Name="Push" HorizontalAlignment="Left" Margin="490,112,0,0" VerticalAlignment="Top" Width="58" Height="58" BorderThickness="0" Background="{x:Null}">
+        <Button x:Name="Push" HorizontalAlignment="Left" Margin="616,117,0,0" VerticalAlignment="Top" Width="58" Height="58" BorderThickness="0" Background="{x:Null}">
             <Image Source="icons8-forward-button-64.png" Width="50"></Image>
         </Button>
-        <Button x:Name="Back" HorizontalAlignment="Left" Margin="490,202,0,0" VerticalAlignment="Top" Width="58" Height="58" BorderThickness="0" Background="{x:Null}">
+        <Button x:Name="Back" HorizontalAlignment="Left" Margin="616,204,0,0" VerticalAlignment="Top" Width="58" Height="58" BorderThickness="0" Background="{x:Null}">
             <Image Source="icons8-go-back-64.png" Width="50"></Image>
         </Button>
-        <Button x:Name="SaveFile" HorizontalAlignment="Left" Margin="490,338,0,0" VerticalAlignment="Top" Width="60" Height="48" BorderThickness="0" Background="{x:Null}">
+        <Button x:Name="SaveFile" HorizontalAlignment="Left" Margin="614,332,0,0" VerticalAlignment="Top" Width="60" Height="48" BorderThickness="0" Background="{x:Null}">
             <Image Source="icons8-save-64.png"></Image>
         </Button>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="344" Margin="572,80,0,0" VerticalAlignment="Top" Width="407">
+        <ListView x:Name="listView" HorizontalAlignment="Left" Height="344" Margin="701,80,0,0" VerticalAlignment="Top" Width="628" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
