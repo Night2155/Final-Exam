@@ -23,25 +23,42 @@ namespace WpfApp2
     {
         List<Student> studentlist = new List<Student>();
         List<AllFile> teacherFileslist = new List<AllFile>();
+        List<Teacher> teacherList = new List<Teacher>();
         public MainWindow()
         {
             InitializeComponent();
             OpenFileInListStudent();//讀入學生檔案
             OpenFileInListAllTeacher();//讀入課程資料
+            
         }
-
         private void OpenFileInListAllTeacher()
         {
+            string Text = " ";
+            int count = -1;
             using (var reader = new StreamReader("D:\\course.csv", Encoding.Default))
             using (var csv = new CsvReader(reader, CultureInfo.CurrentCulture))
             {
                 var records = csv.GetRecords<AllFile>();
                 foreach (var Allfile in records)
                 {
+                    Teacher treenodes = new Teacher();
                     teacherFileslist.Add(Allfile);
+                    if(Text != Allfile.TeacherName)
+                    {
+                        Text = Allfile.TeacherName;
+                        treenodes.TeacherName = Allfile.TeacherName;
+                        treenodes.teacherclassfiles.Add(new Teacherclassfile() {TeacherName = Allfile.TeacherName, ClassName = Allfile.OpeningClass, TeacherCourseName = Allfile.CourseName, ClassType = Allfile.Type, Point = Allfile.Point });
+                        teacherList.Add(treenodes);
+                        count += 1;
+                    }
+                    else
+                    {
+                        teacherList[count].teacherclassfiles.Add(new Teacherclassfile() { TeacherName = Allfile.TeacherName, ClassName = Allfile.OpeningClass, TeacherCourseName = Allfile.CourseName, ClassType = Allfile.Type, Point = Allfile.Point });
+                    }
                 }
             }
             AllClassList.ItemsSource = teacherFileslist;
+            trTeacher.ItemsSource = teacherList;
         }
 
         private void OpenFileInListStudent()
@@ -56,6 +73,11 @@ namespace WpfApp2
                 }
             }
             CBStudent.ItemsSource = studentlist;
+        }
+
+        private void trTeacher_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            Showclass.Content = trTeacher.SelectedItem;
         }
     }
 }
