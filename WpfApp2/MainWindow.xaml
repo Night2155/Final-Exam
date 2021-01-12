@@ -5,42 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="520" Width="1217.2">
+        Title="MainWindow" Height="520" Width="1397.2">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label x:Name="label" Content="學生" HorizontalAlignment="Left" Margin="21,24,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <ComboBox x:Name="CBStudent" HorizontalAlignment="Left" Margin="76,24,0,0" VerticalAlignment="Top" Width="456" Height="35"/>
+        <ComboBox x:Name="CBStudent" HorizontalAlignment="Left" Margin="76,24,0,0" VerticalAlignment="Top" Width="456" Height="35" SelectionChanged="CBStudent_SelectionChanged"/>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="344" Margin="21,80,0,0" VerticalAlignment="Top" Width="575">
             <TabItem Header="以教師分類課程">
                 <TreeView Name="trTeacher" SelectedItemChanged="trTeacher_SelectedItemChanged">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type local:Teacher}" ItemsSource="{Binding teacherclassfiles}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding TeacherName}"/>
+                                <Image Source="TeacherIcon.png"/>
+                                <TextBlock Text="{Binding TeacherName}" FontSize="15"/>
                                 <TextBlock Text="["/>
-                                <TextBlock Text="{Binding teacherclassfiles.Count}"/>
+                                <TextBlock Text="{Binding teacherclassfiles.Count}" Foreground="Blue" FontSize="15"/>
                                 <TextBlock Text="]"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
                         <DataTemplate DataType="{x:Type local:Teacherclassfile}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding ClassName}"/>
+                                <Image Source="BooksIcon.png" Width="20"/>
+                                <TextBlock Text="{Binding ClassName}" FontSize="15"/>
                                 <TextBlock Text=" "/>
-                                <TextBlock Text="{Binding TeacherCourseName}"/>
+                                <TextBlock Text="{Binding TeacherCourseName}" FontSize="15"/>
                                 <TextBlock Text=" "/>
-                                <TextBlock Text="{Binding ClassType}"/>
+                                <TextBlock Text="{Binding ClassType}" Foreground="Blue" FontSize="15"/>
                                 <TextBlock Text=" "/>
-                                <TextBlock Text="{Binding Point}"/>
-                                <TextBlock Text="學分"/>
+                                <TextBlock Text="{Binding Point}" FontSize="15"/>
+                                <TextBlock Text="學分" FontSize="15"/>
                             </StackPanel>
                         </DataTemplate>
                     </TreeView.Resources>
                 </TreeView>
             </TabItem>
             <TabItem Header="所有課程列表">
-                <ListView x:Name="AllClassList" Margin="0,1,-0.4,-1.2">
+                <ListView x:Name="AllClassList" Margin="0,1,-0.4,-1.2" SelectionChanged="AllClassList_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="教師名稱" DisplayMemberBinding="{Binding TeacherName}" Width="60"/>
@@ -54,28 +56,29 @@
                 </ListView>
             </TabItem>
         </TabControl>
-        <Button x:Name="Push" HorizontalAlignment="Left" Margin="616,117,0,0" VerticalAlignment="Top" Width="58" Height="58" BorderThickness="0" Background="{x:Null}">
-            <Image Source="icons8-forward-button-64.png" Width="50"></Image>
+        <Button x:Name="InToListButton" HorizontalAlignment="Left" Margin="616,117,0,0" VerticalAlignment="Top" Width="58" Height="58" BorderThickness="0" Background="{x:Null}" Click="InToListButton_Click">
+            <Image x:Name="In" Source="icons8-forward-button-64.png" Width="50"></Image>
         </Button>
-        <Button x:Name="Back" HorizontalAlignment="Left" Margin="616,204,0,0" VerticalAlignment="Top" Width="58" Height="58" BorderThickness="0" Background="{x:Null}">
-            <Image Source="icons8-go-back-64.png" Width="50"></Image>
+        <Button x:Name="OutListButton" HorizontalAlignment="Left" Margin="616,204,0,0" VerticalAlignment="Top" Width="58" Height="58" BorderThickness="0" Background="{x:Null}" Click="OutListButton_Click">
+            <Image x:Name="Out" Source="icons8-go-back-64.png" Width="50"></Image>
         </Button>
-        <Button x:Name="SaveFile" HorizontalAlignment="Left" Margin="614,332,0,0" VerticalAlignment="Top" Width="60" Height="48" BorderThickness="0" Background="{x:Null}">
-            <Image Source="icons8-save-64.png"></Image>
+        <Button x:Name="SaveFileButton" HorizontalAlignment="Left" Margin="614,332,0,0" VerticalAlignment="Top" Width="60" Height="48" BorderThickness="0" Background="{x:Null}" Click="SaveFileButton_Click">
+            <Image x:Name="Save" Source="icons8-save-64.png"></Image>
         </Button>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="344" Margin="701,80,0,0" VerticalAlignment="Top" Width="478">
+        <ListView x:Name="FinalView" HorizontalAlignment="Left" Height="344" Margin="701,80,0,0" VerticalAlignment="Top" Width="612">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="學號" Width="30"/>
-                    <GridViewColumn Header="學生姓名" Width="60"/>
-                    <GridViewColumn Header="授課教師" Width="70"/>
-                    <GridViewColumn Header="科目名稱" Width="100"/>
-                    <GridViewColumn Header="必選修" Width="60"/>
-                    <GridViewColumn Header="學分數" Width="40"/>
-                    <GridViewColumn Header="開課班級" Width="70"/>
+                    <GridViewColumn Header="學號" DisplayMemberBinding="{Binding SelectStudent.ID}" Width="70"/>
+                    <GridViewColumn Header="學生姓名" DisplayMemberBinding="{Binding SelectStudent.Name}" Width="60"/>
+                    <GridViewColumn Header="授課教師" DisplayMemberBinding="{Binding SelectClass.TeacherName}" Width="70"/>
+                    <GridViewColumn Header="科目名稱" DisplayMemberBinding="{Binding SelectClass.TeacherCourseName}" Width="140"/>
+                    <GridViewColumn Header="必選修" DisplayMemberBinding="{Binding SelectClass.ClassType}" Width="60"/>
+                    <GridViewColumn Header="學分數" DisplayMemberBinding="{Binding SelectClass.Point}"  Width="40"/>
+                    <GridViewColumn Header="開課班級" DisplayMemberBinding="{Binding SelectClass.ClassName}" Width="130"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <Label x:Name="Showclass" Content="     目前未選取課程" HorizontalAlignment="Left" Margin="0,429,0,0" VerticalAlignment="Top" Width="1211" Height="61" Background="#FF2FDDE0" FontSize="15"/>
+        <Label x:Name="PointSubject" Content="目前學分數:0 目前學科數:0" HorizontalAlignment="Left" Margin="701,34,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
